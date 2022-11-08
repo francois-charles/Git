@@ -1,4 +1,5 @@
-#figure community Appeal
+# figure appeal community cote à cote
+
 # coding: utf-8
 import matplotlib.pyplot as plt
 import math
@@ -16,19 +17,29 @@ from colour import Color
 filename_2='C:\\Users\\Charles\\Documents\\Mes documents\\APPEAL\\Tout pour la publication\\appeal_Pub_suite\\comcom.csv'
 data=pd.read_csv(filename_2, sep=";")
 
-fig, ax = plt.subplots()
+fig, (ax1,ax2) = plt.subplots(1, 2,sharex=True,sharey=True)
 
 for i in range (len(data)):
     #décommenter ou commenter selon que les markers doivent être différents ou peuvent être les mêmes
-    plt.plot(data.iloc[i,2], data.iloc[i,4],marker=data.iloc[i,14],markersize=6,color=data.iloc[i,15],markeredgecolor=data.iloc[i,15],zorder=4)
+    ax1.plot(data.iloc[i,2], data.iloc[i,4],marker=data.iloc[i,14],markersize=6,color=data.iloc[i,15],markeredgecolor=data.iloc[i,15],zorder=4)
     # plt.plot(data.iloc[i,2], data.iloc[i,4],marker="o",markersize=6,color=data.iloc[i,15],markeredgecolor=data.iloc[i,15],zorder=4)
     #décommenter ou commenter selon que les markers doivent être différents ou peuvent être les mêmes
-    plt.plot(data.iloc[i,7], data.iloc[i,9],marker=data.iloc[i,14],markeredgewidth=0.7,markersize=6,color='w',markeredgecolor=data.iloc[i,15],zorder=5)
+    ax2.plot(data.iloc[i,7], data.iloc[i,9],marker=data.iloc[i,14],markeredgewidth=0.7,markersize=6,color=data.iloc[i,15],markeredgecolor=data.iloc[i,15],zorder=5)
     # plt.plot(data.iloc[i,7], data.iloc[i,9],marker="o",markeredgewidth=0.7,markersize=6,color='w',markeredgecolor=data.iloc[i,15],zorder=5)
 
-    plt.errorbar(data.iloc[i,2],data.iloc[i,4],xerr=data.iloc[i,3],yerr=data.iloc[i,5],ecolor='k',elinewidth=0.5)
-    plt.errorbar(data.iloc[i,7],data.iloc[i,9],xerr=data.iloc[i,8],yerr=data.iloc[i,10],ecolor='k',elinewidth=0.5)
+    ax1.errorbar(data.iloc[i,2],data.iloc[i,4],xerr=data.iloc[i,3],yerr=data.iloc[i,5],ecolor='k',elinewidth=0.5, zorder=3)
+    ax2.errorbar(data.iloc[i,7],data.iloc[i,9],xerr=data.iloc[i,8],yerr=data.iloc[i,10],ecolor='k',elinewidth=0.5, zorder=3)
 
+ax1.set_xlim(-26,-14)
+ax1.set_ylim(0,14)
+ax2.set_xlim(-26,-14)
+ax2.set_ylim(0,14)
+ax1.set(xlabel="\u03B4 $^{13}C$", ylabel="\u03B4 $^{15}N$")
+ax2.set(xlabel="\u03B4 $^{13}C$")
+
+
+# plt.xlabel("\u03B4 $^{13}C$",fontsize=12)
+# plt.ylabel("\u03B4 $^{15}N$",fontsize=12)
 params = {'mathtext.default': 'regular' }
 plt.rcParams.update(params)
 
@@ -37,18 +48,22 @@ plt.rcParams.update(params)
 plt.rcParams['xtick.bottom']=plt.rcParams['xtick.labelbottom']=True
 plt.rcParams['xtick.top']=plt.rcParams['xtick.labeltop']=False
 #axes.xaxis.set_label_position ('bottom')
-plt.xlabel("\u03B4 $^{13}C$",fontsize=12)
-plt.ylabel("\u03B4 $^{15}N$",fontsize=12)
+plt.rcParams['axes.labelsize'] = 12
+plt.rcParams['xtick.labelsize'] = 8
+plt.rcParams['ytick.labelsize'] = 8
 
-plt.xlim(-26,-14)
-plt.ylim(0,14)
+ax1.set_xticks(np.arange(-26, -13, 2.0))
+ax1.set_yticks(np.arange(0, 15, 2.0))
+ax2.set_xticks(np.arange(-26, -13, 2.0))
+ax2.set_yticks(np.arange(0, 15, 2.0))
 
-plt.xticks(np.arange(-26, -13, 2.0),fontsize=9)
-plt.yticks(np.arange(0, 15, 2.0),fontsize=9)
-plt.gca().set_aspect('equal')
 
-# plt.savefig("C:/Users/Charles/Documents/Mes documents/APPEAL/Tout pour la publication/appeal_Pub_suite/comcom_travail_Ok.jpeg", dpi=600,format="jpeg", transparent=True)
-# plt.savefig("C:/Users/Charles/Documents/Mes documents/APPEAL/Tout pour la publication/appeal_Pub_suite/comcom_travail_Ok.eps", dpi=600,format="eps", transparent=True)
+# plt.xticks(np.arange(-26, -13, 2.0),fontsize=8)
+# plt.yticks(np.arange(0, 15, 2.0),fontsize=8)
+#plt.gca().set_aspect('equal')
+
+plt.savefig("C:/Users/Charles/Documents/Mes documents/APPEAL/Tout pour la publication/appeal_Pub_suite/comcom_travail_Ok_cote.jpeg", dpi=600,format="jpeg", transparent=True)
+plt.savefig("C:/Users/Charles/Documents/Mes documents/APPEAL/Tout pour la publication/appeal_Pub_suite/comcom_travail_Ok_cote.eps", dpi=600,format="eps", transparent=True)
 
 
 plt.show()
